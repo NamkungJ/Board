@@ -89,7 +89,13 @@
 		    <scope>provided</scope>
 		</dependency>
 		
-		
+		<!-- https://mvnrepository.com/artifact/cn.easyproject/orai18n -->
+		<dependency>
+		    <groupId>cn.easyproject</groupId>
+		    <artifactId>orai18n</artifactId>
+		    <version>12.1.0.2.0</version>
+		</dependency>		
+				
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
