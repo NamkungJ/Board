@@ -4,6 +4,10 @@ import java.util.List;
 
 import com.jjundol.domain.BoardVO;
 
+/*
+ * 게시글에 대한 CRUD 
+ */
+
 public interface BoardMapper {
 	
 	//@Select("select * from tbl_board where bno > 0")
