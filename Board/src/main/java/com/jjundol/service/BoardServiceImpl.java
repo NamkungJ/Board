@@ -26,31 +26,31 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<BoardVO> getList() {
-		log.info("getList...");		
+		log.info("[BoardServiceImpl]getList...");
 		return mapper.getList();
 	}
 
 	@Override
 	public void register(BoardVO board) {
-		log.info("register... : " + board);
+		log.info("[BoardServiceImpl]register... : " + board);
 		mapper.insertSelectKey(board);
 	}
 
 	@Override
 	public BoardVO get(int bno) {
-		log.info("get... : " + bno);		
+		log.info("[BoardServiceImpl]get... : " + bno);
 		return mapper.read(bno);
 	}
 
 	@Override
 	public boolean remove(int bno) {
-		log.info("remove... : " + bno);
+		log.info("[BoardServiceImpl]remove... : " + bno);
 		return mapper.delete(bno) == 1;
 	}
 
 	@Override
 	public boolean modify(BoardVO board) {
-		log.info("modify... : " + board);		
+		log.info("[BoardServiceImpl]modify... : " + board);		
 		return mapper.update(board) == 1;
 	}
 
