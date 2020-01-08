@@ -35,7 +35,7 @@
 		set	title = #{title},
 			content = #{content},
 			writer = #{writer},
-			updateDate = sysdate
+			updatedate = sysdate
 		where bno = #{bno}
 	</update>
 	
