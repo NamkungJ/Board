@@ -5,18 +5,13 @@
 	<div id="page-wrapper">
 		<div class="row">
 		    <div class="col-lg-12">
-		        <h1 class="page-header">Tables</h1>
+		        <h1 class="page-header">게시판</h1>
 		    </div>
-		    <!-- /.col-lg-12 -->
 		</div>
-		<!-- /.row -->
 		<div class="row">
 		    <div class="col-lg-12">
 		        <div class="panel panel-default">
-		            <div class="panel-heading">
-		                DataTables Advanced Tables
-		            </div>
-		            <!-- /.panel-heading -->
+		            <div class="panel-heading">게시글 목록<button id="regBtn" type="button" class="btn btn-xs btn-default pull-right">게시글 작성하기</button></div>		            
 		            <div class="panel-body">
 		                <div class="table-responsive">
 		                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
@@ -41,16 +36,47 @@
 		                        	</c:forEach>		                        		                       
 								</tbody>
 		                    </table>
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="myModalLabel">게시물등록완료</h4>
+                                        </div>
+                                        <div class="modal-body">게시물이 등록되었습니다.</div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 		                </div>
-		                <!-- /.table-responsive -->		
 		            </div>
-		            <!-- /.panel-body -->
 		        </div>
-		        <!-- /.panel -->
 		    </div>
-		    <!-- /.col-lg-12 -->
 		</div>
-		<!-- /.row -->			
 	</div>
-	<!-- /#page-wrapper -->
-<%@include file="../include/footer.jsp" %>        
+<%@include file="../include/footer.jsp" %>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var result = '<c:out value="${result}" />';
+		
+		checkModal(result);
+		
+		function checkModal(result) {
+			if(result === '') {
+				return;
+			}
+		
+			if(parseInt(result) > 0) {
+				$('.modal-body').html("게시글이" + parseInt(result) + "번으로 등록되었습니다.");
+			}
+			$('#myModal').modal("show");
+		}
+		
+		$("#regBtn").on("click", function () {
+			self.location = "/board/register";
+		});
+		
+	});
+</script>

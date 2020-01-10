@@ -37,6 +37,11 @@ public class BoardController {
 		model.addAttribute("list", service.getList());
 	}
 	
+	// 게시글 등록 페이지
+	@GetMapping
+	public void register() { 
+	}
+	
 	// 게시글 등록
 	@PostMapping("/register")
 	public String register(BoardVO board, RedirectAttributes rttr) {
@@ -45,7 +50,7 @@ public class BoardController {
 		
 		rttr.addFlashAttribute("result", board.getBno()); // redirect 직전 flash에 데이터 저장
 		return "redirect:/board/list";	// 게시글 목록으로 이동
-	}
+	}		
 	
 	// 특정 게시글 읽기
 	@GetMapping("/get")
