@@ -27,9 +27,9 @@
 		                        <tbody>
 		                        	<c:forEach items="${list}" var="board">
 		                        		<tr class="odd gradeX">
-			                                <td><c:out value="${board.bno}"></c:out></td>
-			                                <td><c:out value="${board.title}"></c:out></td>
-			                                <td><c:out value="${board.writer}"></c:out></td>
+			                                <td><c:out value="${board.bno}"/></td>
+			                                <td><a href="/board/get?bno=<c:out value="${board.bno}"/>"><c:out value="${board.title}"/></a></td>
+			                                <td><c:out value="${board.writer}"/></td>
 			                                <td class="center"><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd"/></td>
 			                                <td class="center"><fmt:formatDate value="${board.updatedate}" pattern="yyyy-MM-dd"/></td>
 		                            	</tr>	
@@ -63,8 +63,10 @@
 		
 		checkModal(result);
 		
+		history.replaceState({}, null, null); // 뒤로가기 문제, modal안뜨도록 표시
+		
 		function checkModal(result) {
-			if(result === '') {
+			if(result === '' || hitory.state) {	// 뒤로가기 문제, modal안뜨도록 표시
 				return;
 			}
 		
@@ -76,6 +78,7 @@
 		
 		$("#regBtn").on("click", function () {
 			self.location = "/board/register";
+			//location.href = "/board/register";
 		});
 		
 	});

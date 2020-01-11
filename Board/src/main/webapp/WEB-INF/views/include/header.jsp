@@ -24,7 +24,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">JJundol 게시판</a>
+                <a class="navbar-brand" href="/board/list">JJundol 게시판</a>
             </div>
 
             <ul class="nav navbar-top-links navbar-right">
