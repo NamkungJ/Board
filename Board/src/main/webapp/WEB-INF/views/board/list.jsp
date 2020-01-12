@@ -41,9 +41,9 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                            <h4 class="modal-title" id="myModalLabel">게시물등록완료</h4>
+                                            <h4 class="modal-title" id="myModalLabel">게시물 처리완료</h4>
                                         </div>
-                                        <div class="modal-body">게시물이 등록되었습니다.</div>
+                                        <div class="modal-body"></div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>                                            
                                         </div>
@@ -59,19 +59,28 @@
 <%@include file="../include/footer.jsp" %>
 <script type="text/javascript">
 	$(document).ready(function() {
+		var oper_bno = '<c:out value="${oper_bno}" />';
 		var result = '<c:out value="${result}" />';
 		
-		checkModal(result);
+		checkModal(oper_bno);
 		
 		history.replaceState({}, null, null); // 뒤로가기 문제, modal안뜨도록 표시
 		
-		function checkModal(result) {
-			if(result === '' || hitory.state) {	// 뒤로가기 문제, modal안뜨도록 표시
+		function checkModal(oper_bno) {
+			if(oper_bno === '' || history.state) {	// 뒤로가기 문제, modal안뜨도록 표시
 				return;
 			}
-		
-			if(parseInt(result) > 0) {
-				$('.modal-body').html("게시글이" + parseInt(result) + "번으로 등록되었습니다.");
+			
+			if(parseInt(oper_bno) > 0) {
+				if(result === 'reg_success') {
+					$('.modal-body').html(parseInt(oper_bno) + "번 게시글로로 등록되었습니다.");
+				}
+				else if(result === 'mod_success') {
+					$('.modal-body').html(parseInt(oper_bno) + "번 게시글이 수정되었습니다.");
+				}
+				else if(result === 'rmv_success') {
+					$('.modal-body').html(parseInt(oper_bno) + "번 게시글이 삭제되었습니다.");
+				}
 			}
 			$('#myModal').modal("show");
 		}

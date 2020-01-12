@@ -47,13 +47,13 @@ public class BoardController {
 	public String register(BoardVO board, RedirectAttributes rttr) {
 		log.info("[BoardController]register... : " + board);
 		service.register(board);
-		
-		rttr.addFlashAttribute("result", board.getBno()); // redirect 직전 flash에 데이터 저장
+		rttr.addFlashAttribute("oper_bno", board.getBno());	// redirect 직전 flash에 데이터 저장
+		rttr.addFlashAttribute("result", "reg_success");
 		return "redirect:/board/list";	// 게시글 목록으로 이동
 	}		
 	
-	// 특정 게시글 읽기
-	@GetMapping("/get")
+	// 게시글 읽기 for 조회, 게시글 읽기 for 수정
+	@GetMapping({"/get", "/modify"})
 	public void get(@RequestParam("bno") int bno, Model model) {
 		log.info("[BoardController]read... : " + bno);
 		model.addAttribute("board", service.get(bno));
@@ -62,8 +62,9 @@ public class BoardController {
 	// 특정 게시글 수정
 	@PostMapping("/modify")
 	public String modify(BoardVO board, RedirectAttributes rttr) {
-		log.info("[BoardController]read... : " + board);
+		log.info("[BoardController]modify... : " + board);
 		if(service.modify(board)) {
+			rttr.addFlashAttribute("oper_bno", board.getBno());
 			rttr.addFlashAttribute("result", "mod_success");
 		}
 		return "redirect:/board/list";	// 게시글 목록으로 이동
@@ -74,6 +75,7 @@ public class BoardController {
 	public String remove(@RequestParam("bno") int bno, RedirectAttributes rttr) {
 		log.info("[BoardController]remove... : " + bno);
 		if(service.remove(bno)) {
+			rttr.addFlashAttribute("oper_bno", bno);
 			rttr.addFlashAttribute("result", "rmv_success");
 		}
 		return "redirect:/board/list";	// 게시글 목록으로 이동

@@ -28,7 +28,7 @@
                        </div>
                        <button id="backBtn" type="button" class="btn btn-default">목록</button>
                        <button type="submit" class="btn btn-default">저장</button>
-                       <button type="reset" class="btn btn-default">리셋</button>
+                       <button type="reset" class="btn btn-default">초기화</button>
                    	</form>    
                 </div>                
              </div>             
@@ -38,6 +38,6 @@
 <%@include file="../include/footer.jsp" %>
 <script type="text/javascript">
 	$('#backBtn').on("click", function() {
-		self.location = "/board/list";
+		self.location = "/board/list";		// 목록화면 이동
 	});
 </script>
