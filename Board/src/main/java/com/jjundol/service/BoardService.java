@@ -3,11 +3,14 @@ package com.jjundol.service;
 import java.util.List;
 
 import com.jjundol.domain.BoardVO;
+import com.jjundol.domain.Criteria;
 
 public interface BoardService {
 	
 	// 게시물 여러개 가져오기
-	public List<BoardVO> getList();
+	//public List<BoardVO> getList();
+	// 페이징 처리
+	public List<BoardVO> getList(Criteria cri);
 	
 	// 게시글 작성
 	public void register(BoardVO board);

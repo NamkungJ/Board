@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jjundol.domain.BoardVO;
+import com.jjundol.domain.Criteria;
 import com.jjundol.mapper.BoardMapper;
 
 import lombok.Setter;
@@ -24,10 +25,18 @@ public class BoardServiceImpl implements BoardService {
 	@Setter(onMethod_ = @Autowired)
 	private BoardMapper mapper;
 
+	/*
 	@Override
 	public List<BoardVO> getList() {
 		log.info("[BoardServiceImpl]getList...");
 		return mapper.getList();
+	}
+	*/
+	
+	@Override
+	public List<BoardVO> getList(Criteria cri) {
+		log.info("[BoardServiceImpl]getList_getListWithPaging...");
+		return mapper.getListWithPaging(cri);
 	}
 
 	@Override

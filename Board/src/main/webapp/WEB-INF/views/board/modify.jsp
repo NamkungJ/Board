@@ -31,11 +31,11 @@
 	                           <input class="form-control" name="writer" value='<c:out value="${board.writer}"/>' readonly="readonly" >
 	                    	</div>
 	                    	
-	                    	<div class="form-group">
+	                    	<div class="form-group" hidden="ture">
 	                           <label>등록일</label>
 	                           <input class="form-control" name="regdate" value='<fmt:formatDate pattern="yyyy/MM/dd" value="${board.regdate}"/>' readonly="readonly" >
 	                    	</div>
-	                    	<div class="form-group">
+	                    	<div class="form-group" hidden="ture">
 	                           <label>수정일</label>
 	                           <input class="form-control" name="updatedate" value='<fmt:formatDate pattern="yyyy/MM/dd" value="${board.updatedate}"/>' readonly="readonly" >
 	                    	</div>

@@ -1,18 +1,19 @@
 package com.jjundol.mapper;
 
 import java.util.List;
-
-import com.jjundol.domain.BoardVO;
-
 /*
- * 게시글에 대한 CRUD 
- */
+ * 게시판 Mapper 인터페이스
+ * */
+import com.jjundol.domain.BoardVO;
+import com.jjundol.domain.Criteria;
 
 public interface BoardMapper {
 	
 	//@Select("select * from tbl_board where bno > 0")
 	// 게시물 여러개 가져오기
 	public List<BoardVO> getList();
+	// 페이징처리
+	public List<BoardVO> getListWithPaging(Criteria cri);
 	
 	// 게시글 작성
 	public void insert(BoardVO board);

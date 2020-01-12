@@ -1,6 +1,6 @@
 package com.jjundol.mapper;
 
-import static org.junit.Assert.assertNotNull;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.jjundol.domain.BoardVO;
+import com.jjundol.domain.Criteria;
 import com.jjundol.service.BoardService;
 
 import lombok.Setter;
@@ -31,6 +32,11 @@ public class BoardMapperTests {
 		mapper.getList().forEach(board -> log.info(board));
 	}
 	*/
+	
+	@Test
+	public void getList() {
+		service.getList(new Criteria(4, 10)).forEach(board -> log.info(board));
+	}
 	
 	/*
 	@Test
@@ -112,7 +118,7 @@ public class BoardMapperTests {
 		log.info("testRemove : " + service.remove(5));
 	}
 	*/
-	
+	/*
 	@Test
 	public void testUpdate() {
 		
@@ -125,5 +131,16 @@ public class BoardMapperTests {
 		board.setTitle("제목을 수정합니다.");		
 		log.info("testUpdate : " + service.modify(board));
 	}
-	
+	*/
+	/*
+	@Test
+	public void testPaging() {
+		Criteria cri = new Criteria();
+		//cri.setPageNum(1);
+		//cri.setAmount(10);
+		
+		List<BoardVO> boardList = mapper.getListWithPaging(cri);
+		boardList.forEach(board -> log.info("Paging : " + board.getBno()));
+	}
+	*/
 }

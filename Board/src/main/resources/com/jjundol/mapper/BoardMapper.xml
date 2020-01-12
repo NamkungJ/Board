@@ -8,13 +8,13 @@
 	
 	<insert id="insert">
 		insert into tbl_board (bno, title, content, writer)
-		values (seq_board.nextval, #{bno}, #{content}, #{writer})
+		values (seq_boardsq.nextval, #{bno}, #{content}, #{writer})
 	</insert>
 
 	<insert id="insertSelectKey">
 	
 		<selectKey keyProperty="bno" order="BEFORE" resultType="int">
-			select seq_board.nextval from dual
+			select seq_boardsq.nextval from dual
 		</selectKey>
 		
 		insert into tbl_board (bno, title, content, writer)
@@ -38,5 +38,17 @@
 			updatedate = sysdate
 		where bno = #{bno}
 	</update>
+	
+	<select id="getListWithPaging" resultType="com.jjundol.domain.BoardVO">
+		select 
+			bno, title, content, writer, regdate, updatedate
+		from (
+			select /*+ INDEX_DESC(tbl_board pk_board) */
+				rownum rn, bno, title, content, writer, regdate, updatedate
+			from tbl_board
+			where rownum <![CDATA[<=]]> #{pageNum} * #{amount}
+		)
+		where rn <![CDATA[>]]> (#{pageNum} - 1) * #{amount}
+	</select>
 	
 </mapper>

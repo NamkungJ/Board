@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jjundol.domain.BoardVO;
+import com.jjundol.domain.Criteria;
 import com.jjundol.service.BoardService;
 
 import lombok.Setter;
@@ -32,9 +33,9 @@ public class BoardController {
 	
 	// 전체 게시글 조회
 	@GetMapping("/list")
-	public void getList(Model model) {
-		log.info("[BoardController]getList...");
-		model.addAttribute("list", service.getList());
+	public void getList(Criteria cri, Model model) {
+		log.info("[BoardController]getList_getListWithPaging...");
+		model.addAttribute("list", service.getList(cri));
 	}
 	
 	// 게시글 등록 페이지
