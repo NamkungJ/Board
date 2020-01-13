@@ -14,6 +14,9 @@ public interface BoardMapper {
 	public List<BoardVO> getList();
 	// 페이징처리
 	public List<BoardVO> getListWithPaging(Criteria cri);
+
+	// 전체 게시글 개수
+	public int getTotal();
 	
 	// 게시글 작성
 	public void insert(BoardVO board);

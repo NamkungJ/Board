@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jjundol.domain.BoardVO;
 import com.jjundol.domain.Criteria;
+import com.jjundol.domain.PageDTO;
 import com.jjundol.service.BoardService;
 
 import lombok.Setter;
@@ -36,6 +37,9 @@ public class BoardController {
 	public void getList(Criteria cri, Model model) {
 		log.info("[BoardController]getList_getListWithPaging...");
 		model.addAttribute("list", service.getList(cri));
+		
+		int total = service.getTotal();		// 전체 게시글 개수
+		model.addAttribute("pageMaker",new PageDTO(cri, total));	// cri, total(전체 데이터 개수)
 	}
 	
 	// 게시글 등록 페이지

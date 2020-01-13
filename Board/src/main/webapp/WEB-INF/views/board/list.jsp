@@ -14,7 +14,7 @@
 		            <div class="panel-heading">게시글 목록<button id="regBtn" type="button" class="btn btn-xs btn-default pull-right">게시글 작성하기</button></div>		            
 		            <div class="panel-body">
 		                <div class="table-responsive">
-		                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+		                    <table class="table table-striped table-bordered table-hover">
 		                        <thead>
 		                            <tr>
 		                                <th>번호</th>
@@ -36,6 +36,26 @@
 		                        	</c:forEach>		                        		                       
 								</tbody>
 		                    </table>
+		                    <!-- Paging Start -->   
+		                    <div class="pull-right">
+		                    	<ul class="pagination">
+		                    		<c:if test="${pageMaker.prev}">
+		                    			<li class="paginate_button previous"><a href="${pageMaker.startPage - 1}">Previous</a></li>
+		                    		</c:if>		                    		
+		                    		<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+		                    			<li class="pagination_button ${pageMaker.cri.pageNum == num ? 'active':'' } "><a href="${num}">${num}</a></li>
+		                    		</c:forEach>
+		                    		<c:if test="${pageMaker.next}">
+		                    			<li class="paginate_button next"><a href="${pageMaker.endPage + 1}">Next</a></li>
+		                    		</c:if>
+		                    	</ul>
+		                    </div>
+		                    <form id="actionForm" action="/board/list" method="GET">
+								<input type="hidden" name="pageNum" value="<c:out value='${pageMaker.cri.pageNum}'/>">
+								<input type="hidden" name="amount" value="<c:out value='${pageMaker.cri.amount}'/>">
+		                    </form>
+                            <!-- Paging End -->                    		                   
+		                    <!-- Modal Start -->
                             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -50,6 +70,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- Modal End -->                            
 		                </div>
 		            </div>
 		        </div>
@@ -86,8 +107,17 @@
 		}
 		
 		$("#regBtn").on("click", function () {
-			self.location = "/board/register";
-			//location.href = "/board/register";
+			self.location = "/board/register";			
+		});
+		
+		
+		var actionFormObj = $('#actionForm');
+		
+		$('.pagination_button a').on("click", function(e){
+			e.preventDefault();		// <a>클릭 시 페이지 이동 막기
+						
+			actionFormObj.find("input[name='pageNum']").val($(this).attr("href"));
+			actionFormObj.submit();
 		});
 		
 	});

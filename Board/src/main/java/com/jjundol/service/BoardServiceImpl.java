@@ -38,6 +38,12 @@ public class BoardServiceImpl implements BoardService {
 		log.info("[BoardServiceImpl]getList_getListWithPaging...");
 		return mapper.getListWithPaging(cri);
 	}
+	
+	@Override
+	public int getTotal() {
+		log.info("[BoardServiceImpl]getTotal...");
+		return mapper.getTotal();
+	}
 
 	@Override
 	public void register(BoardVO board) {

@@ -11,6 +11,9 @@ public interface BoardService {
 	//public List<BoardVO> getList();
 	// 페이징 처리
 	public List<BoardVO> getList(Criteria cri);
+
+	// 전체 게시글 개수
+	public int getTotal();
 	
 	// 게시글 작성
 	public void register(BoardVO board);
