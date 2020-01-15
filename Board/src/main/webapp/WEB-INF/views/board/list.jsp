@@ -28,7 +28,8 @@
 		                        	<c:forEach items="${list}" var="board">
 		                        		<tr class="odd gradeX">
 			                                <td><c:out value="${board.bno}"/></td>
-			                                <td><a href="/board/get?bno=<c:out value="${board.bno}"/>"><c:out value="${board.title}"/></a></td>
+			                                <!-- <td><a href="/board/get?bno=<c:out value="${board.bno}"/>"><c:out value="${board.title}"/></a></td> -->
+			                                <td><a class="move" href="<c:out value='${board.bno}'/>"><c:out value="${board.title}"/></a></td>
 			                                <td><c:out value="${board.writer}"/></td>
 			                                <td class="center"><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd"/></td>
 			                                <td class="center"><fmt:formatDate value="${board.updatedate}" pattern="yyyy-MM-dd"/></td>
@@ -36,7 +37,7 @@
 		                        	</c:forEach>		                        		                       
 								</tbody>
 		                    </table>
-		                    <!-- Paging Start -->   
+		                    <!-- Paging Start -->
 		                    <div class="pull-right">
 		                    	<ul class="pagination">
 		                    		<c:if test="${pageMaker.prev}">
@@ -87,6 +88,7 @@
 		
 		history.replaceState({}, null, null); // 뒤로가기 문제, modal안뜨도록 표시
 		
+		// Modal
 		function checkModal(oper_bno) {
 			if(oper_bno === '' || history.state) {	// 뒤로가기 문제, modal안뜨도록 표시
 				return;
@@ -104,20 +106,31 @@
 				}
 			}
 			$('#myModal').modal("show");
-		}
-		
-		$("#regBtn").on("click", function () {
-			self.location = "/board/register";			
-		});
-		
+		}						
 		
 		var actionFormObj = $('#actionForm');
 		
-		$('.pagination_button a').on("click", function(e){
+		// register
+		$("#regBtn").on("click", function () {			
+			actionFormObj.attr("action", "/board/register");
+			actionFormObj.submit();			
+		});
+		
+		// page이동
+		$('.pagination_button a').on("click", function(e) {
 			e.preventDefault();		// <a>클릭 시 페이지 이동 막기
 						
 			actionFormObj.find("input[name='pageNum']").val($(this).attr("href"));
 			actionFormObj.submit();
+		});
+		
+		// get
+		$('.move').on("click", function(e) {			
+			e.preventDefault();		// <a>클릭 시 페이지 이동 막기
+			
+			actionFormObj.append("<input type='hidden' name='bno' value='" + $(this).attr('href')+"'>");
+			actionFormObj.attr("action", "/board/get");
+			actionFormObj.submit();		// /board/get?pageNum=7&amount=10&bno=32701
 		});
 		
 	});

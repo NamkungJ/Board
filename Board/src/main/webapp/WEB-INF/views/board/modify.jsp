@@ -39,6 +39,9 @@
 	                           <label>수정일</label>
 	                           <input class="form-control" name="updatedate" value='<fmt:formatDate pattern="yyyy/MM/dd" value="${board.updatedate}"/>' readonly="readonly" >
 	                    	</div>
+	                    	<!-- Criteria : pageNum, amount -->	                    	
+	                    	<input type="hidden" name="pageNum" value="<c:out value='${cri.pageNum}' />">
+	                    	<input type="hidden" name="amount" value="<c:out value='${cri.amount}' />">
 						</form>
 						<button type="submit" data-oper="modify" class="btn btn-info">수정</button>
                        	<button type="submit" data-oper="remove" class="btn btn-danger">삭제</button>
@@ -63,11 +66,14 @@
 			}
 			else if(operation === 'list') {				
 				modFormObj.attr("action", "/board/list").attr("method", "GET");	// 목록화면 이동
+				var pageNumTag = $("input[name='pageNum']").clone();
+				var amountTag = $("input[name='amount']").clone();
+								
+				// list로 돌아갈때 다지우고 필요한 애들(pageNum, amount)만 남김
 				modFormObj.empty();
-				//self.location = '/board/list';
-				//return;
+				modFormObj.append(pageNumTag);
+				modFormObj.append(amountTag);
 			}
-			
 			modFormObj.submit();
 		});
 		

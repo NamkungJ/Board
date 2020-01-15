@@ -32,28 +32,32 @@
                        
                        <form id="operForm" role="form" action="/board/modify" method="GET">                       		
                            <input id="bno" type="hidden" class="form-control" name="bno" value='<c:out value="${board.bno}"/>'>
+                           <input id="pageNum" type="hidden" class="form-control" name="pageNum" value='<c:out value="${cri.pageNum}"/>'>
+                           <input id="amount" type="hidden" class="form-control" name="amount" value='<c:out value="${cri.amount}"/>'>
                        </form>
                        <button type="submit" data-oper="list" class="btn btn-default">목록</button>                      
                        <button type="submit" data-oper="modify" class="btn btn-default">수정</button>
                        <!--<button data-oper="list" class="btn btn-default" onclick="location.href='/board/list'">목록</button>
                        <button data-oper="modify" class="btn btn-default" onclick="location.href='/board/modify?bno=<c:out value="${board.bno}" />'">수정</button> -->
-	                </div>                
+	                </div>
 	             </div>
-	         </div>         
-     	</div>     
+	         </div>
+     	</div>
 	</div>
 <%@include file="../include/footer.jsp" %>
 <script type="text/javascript">
 	$(document).ready(function() {
 		var operFormObj = $('#operForm');
 		
+		// modify
 		$("button[data-oper='modify']").on("click", function() {
-			operFormObj.attr("action", "/board/modify").submit();	// 수정화면 이동
+			operFormObj.attr("action", "/board/modify").submit();
 		});
 		
+		// list
 		$("button[data-oper='list']").on("click", function() {
 			operFormObj.find('#bno').remove();	//  bno값 넘길필요없음
-			operFormObj.attr("action", "/board/list").submit();		// 목록화면 이동
+			operFormObj.attr("action", "/board/list").submit();
 			//self.location = '/board/list';
 		});
 	});

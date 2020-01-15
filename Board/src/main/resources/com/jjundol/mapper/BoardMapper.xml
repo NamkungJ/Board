@@ -38,7 +38,7 @@
 		select * from tbl_board where bno = #{bno}
 	</select>
 	
-	<select id="getTotal" resultType="int">
+	<select id="getTotalCnt" resultType="int">
 		select count(*) from tbl_board
 	</select>
 	

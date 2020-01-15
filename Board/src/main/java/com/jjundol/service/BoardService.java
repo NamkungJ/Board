@@ -13,7 +13,7 @@ public interface BoardService {
 	public List<BoardVO> getList(Criteria cri);
 
 	// 전체 게시글 개수
-	public int getTotal();
+	public int getTotalCnt();
 	
 	// 게시글 작성
 	public void register(BoardVO board);
