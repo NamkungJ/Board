@@ -32,11 +32,11 @@ public class BoardMapperTests {
 		mapper.getList().forEach(board -> log.info(board));
 	}
 	*/
-	
+	/*
 	@Test
 	public void getList() {
 		service.getList(new Criteria(4, 10)).forEach(board -> log.info(board));
-	}
+	}*/
 	
 	/*
 	@Test
@@ -143,4 +143,14 @@ public class BoardMapperTests {
 		boardList.forEach(board -> log.info("Paging : " + board.getBno()));
 	}
 	*/
+	@Test
+	public void testSearch() {
+		Criteria cri = new Criteria();
+		cri.setKeyword("테스");
+		cri.setType("TC");
+		
+		List<BoardVO> list = mapper.getListWithPaging(cri);
+		
+		list.forEach(board -> log.info("Search : " + board));
+	}
 }

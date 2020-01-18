@@ -6,6 +6,26 @@
 		select * from tbl_board where bno <![CDATA[>]]> 0 
 	</select>
 	
+	<sql id="criteria_search">
+		<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+			<foreach item="type" collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							title like '%' || #{keyword} || '%'
+						</when>
+						<when test="type == 'C'.toString()">
+							content like '%' || #{keyword} || '%'
+						</when>
+						<when test="type == 'W'.toString()">
+							writer like '%' || #{keyword} || '%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
 	<select id="getListWithPaging" resultType="com.jjundol.domain.BoardVO">
 		select 
 			bno, title, content, writer, regdate, updatedate
@@ -13,7 +33,9 @@
 			select /*+ INDEX_DESC(tbl_board pk_board) */
 				rownum rn, bno, title, content, writer, regdate, updatedate
 			from tbl_board
-			where rownum <![CDATA[<=]]> #{pageNum} * #{amount}
+			where
+			<include refid="criteria_search"></include>
+			rownum <![CDATA[<=]]> #{pageNum} * #{amount}
 		)
 		where rn <![CDATA[>]]> (#{pageNum} - 1) * #{amount}
 	</select>
@@ -40,6 +62,9 @@
 	
 	<select id="getTotalCnt" resultType="int">
 		select count(*) from tbl_board
+		where
+		<include refid="criteria_search"></include>
+		bno > 0
 	</select>
 	
 	<delete id="delete">

@@ -37,6 +37,25 @@
 		                        	</c:forEach>		                        		                       
 								</tbody>
 		                    </table>
+		                    <!-- Search Start -->
+		                    <div>			                    
+			                    <form id="searchForm" action="/board/list" method="GET">
+			                    	<select name="type">
+			                    		<option value="" <c:out value="${pageMaker.cri.type == null ? 'selected' : ''}" /> >검색조건</option>
+			                    		<option value="T" <c:out value="${pageMaker.cri.type eq 'T' ? 'selected' : ''}" /> >제목</option>
+			                    		<option value="C" <c:out value="${pageMaker.cri.type eq 'C' ? 'selected' : ''}" /> >내용</option>
+			                    		<option value="W" <c:out value="${pageMaker.cri.type eq 'W' ? 'selected' : ''}" /> >작성자</option>
+			                    		<option value="TC" <c:out value="${pageMaker.cri.type eq 'TC' ? 'selected' : ''}" /> >제목 or 내용</option>
+			                    		<option value="TW" <c:out value="${pageMaker.cri.type eq 'TW' ? 'selected' : ''}" /> >제목 or 작성자</option>
+			                    		<option value="TWC" <c:out value="${pageMaker.cri.type eq 'TWC' ? 'selected' : ''}" /> >제목 or 내용 or 작성자</option>
+			                    	</select>
+			                    	<input type="text" name="keyword">
+									<input type="hidden" name="pageNum" value="<c:out value='${pageMaker.cri.pageNum}'/>">
+									<input type="hidden" name="amount" value="<c:out value='${pageMaker.cri.amount}'/>">								
+									<button class="btn btn-default">검색</button>
+			                    </form>
+		                    </div>
+		                    <!-- Search End -->
 		                    <!-- Paging Start -->
 		                    <div class="pull-right">
 		                    	<ul class="pagination">
@@ -54,6 +73,8 @@
 		                    <form id="actionForm" action="/board/list" method="GET">
 								<input type="hidden" name="pageNum" value="<c:out value='${pageMaker.cri.pageNum}'/>">
 								<input type="hidden" name="amount" value="<c:out value='${pageMaker.cri.amount}'/>">
+								<input type="hidden" name="type" value="<c:out value='${pageMaker.cri.type}'/>">
+								<input type="hidden" name="keyword" value="<c:out value='${pageMaker.cri.keyword}'/>">
 		                    </form>
                             <!-- Paging End -->                    		                   
 		                    <!-- Modal Start -->
@@ -120,7 +141,7 @@
 		$('.pagination_button a').on("click", function(e) {
 			e.preventDefault();		// <a>클릭 시 페이지 이동 막기
 						
-			actionFormObj.find("input[name='pageNum']").val($(this).attr("href"));
+			actionFormObj.find("input[name='pageNum']").val($(this).attr("href"));	// .pagination_button a 의 href값
 			actionFormObj.submit();
 		});
 		
@@ -132,6 +153,25 @@
 			actionFormObj.attr("action", "/board/get");
 			actionFormObj.submit();		// /board/get?pageNum=7&amount=10&bno=32701
 		});
+		
+		var searchFormObj = $('#searchForm');
+		
+		// search
+		$('#searchForm button').on("click", function(e) {
+			
+			if(!searchFormObj.find("option:selected").val()){
+				alert("검색 조건을 선택하세요.");
+				return false;
+			}
+			if(!searchFormObj.find("input[name='keyword']").val()){
+				alert("검색어를 입력하세요.");
+				return false;
+			}
+			searchFormObj.find("input[name='pageNum']").val("1");
+			e.preventDefault();
+			
+			searchFormObj.submit();
+		});		
 		
 	});
 </script>

@@ -37,9 +37,9 @@ public class BoardController {
 	@GetMapping("/list")
 	public void getList(Criteria cri, Model model) {
 		log.info("[BoardController]getList_getListWithPaging...");
-		model.addAttribute("list", service.getList(cri));	// 1, 10
+		model.addAttribute("list", service.getList(cri));	// 10개만 조회
 		
-		int total = service.getTotalCnt();	// 전체 게시글 개수
+		int total = service.getTotalCnt(cri);	// 전체 게시글 개수
 		model.addAttribute("pageMaker",new PageDTO(cri, total));	// cri, total(전체 데이터 개수), new PageDTO(cri, total)->paging관련 파라미터 계산됨->list.jsp
 	}
 	
