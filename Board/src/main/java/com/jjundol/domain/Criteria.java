@@ -1,5 +1,7 @@
 package com.jjundol.domain;
 
+import org.springframework.web.util.UriComponentsBuilder;
+
 import lombok.Data;
 
 /*
@@ -11,7 +13,7 @@ public class Criteria {
 	private int amount;		// 조회개수/화면
 	
 	private String type;	// 검색조건
-	private String Keyword;	// 검색키워드
+	private String keyword;	// 검색키워드
 	
 	public Criteria() {
 		this(1, 10);
@@ -25,4 +27,15 @@ public class Criteria {
 	public String[] getTypeArr() {
 		return type == null ? new String[] {} : type.split("");
 	}
+	
+	public String getListLink() {
+		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
+				.queryParam("pageNum", this.pageNum)
+				.queryParam("amount", this.getAmount())
+				.queryParam("type", this.getType())
+				.queryParam("keyword", this.getKeyword());
+		
+		return builder.toUriString();
+	}
+	
 }

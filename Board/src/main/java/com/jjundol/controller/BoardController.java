@@ -37,7 +37,7 @@ public class BoardController {
 	@GetMapping("/list")
 	public void getList(Criteria cri, Model model) {
 		log.info("[BoardController]getList_getListWithPaging...");
-		model.addAttribute("list", service.getList(cri));	// 10개만 조회
+		model.addAttribute("list", service.getList(cri));	// 10개만 조회, 검색타입, 키워드
 		
 		int total = service.getTotalCnt(cri);	// 전체 게시글 개수
 		model.addAttribute("pageMaker",new PageDTO(cri, total));	// cri, total(전체 데이터 개수), new PageDTO(cri, total)->paging관련 파라미터 계산됨->list.jsp
@@ -81,10 +81,14 @@ public class BoardController {
 			rttr.addFlashAttribute("result", "mod_success");
 		}
 		
+		/*
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
+		rttr.addAttribute("type", cri.getType());
+		rttr.addAttribute("keyword", cri.getKeyword());
+		*/
 		
-		return "redirect:/board/list";	// 게시글 목록으로 이동
+		return "redirect:/board/list" + cri.getListLink();	// 게시글 목록으로 이동
 	}
 	
 	// 특정 게시글 삭제
@@ -96,9 +100,13 @@ public class BoardController {
 			rttr.addFlashAttribute("result", "rmv_success");
 		}
 		
+		/*
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
+		rttr.addAttribute("type", cri.getType());
+		rttr.addAttribute("keyword", cri.getKeyword());
+		*/
 		
-		return "redirect:/board/list";	// 게시글 목록으로 이동
+		return "redirect:/board/list" + cri.getListLink();	// 게시글 목록으로 이동
 	}
 }

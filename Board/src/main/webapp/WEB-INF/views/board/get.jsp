@@ -34,6 +34,8 @@
                            <input id="bno" type="hidden" class="form-control" name="bno" value='<c:out value="${board.bno}"/>'>
                            <input id="pageNum" type="hidden" class="form-control" name="pageNum" value='<c:out value="${cri.pageNum}"/>'>
                            <input id="amount" type="hidden" class="form-control" name="amount" value='<c:out value="${cri.amount}"/>'>
+                           <input id="type" type="hidden" class="form-control" name="type" value='<c:out value="${cri.type}"/>'>
+                           <input id="keyword" type="hidden" class="form-control" name="keyword" value='<c:out value="${cri.keyword}"/>'>
                        </form>
                        <button type="submit" data-oper="list" class="btn btn-default">목록</button>                      
                        <button type="submit" data-oper="modify" class="btn btn-default">수정</button>

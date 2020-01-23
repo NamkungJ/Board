@@ -42,6 +42,8 @@
 	                    	<!-- Criteria : pageNum, amount -->	                    	
 	                    	<input type="hidden" name="pageNum" value="<c:out value='${cri.pageNum}' />">
 	                    	<input type="hidden" name="amount" value="<c:out value='${cri.amount}' />">
+	                    	<input type="hidden" name="type" value='<c:out value="${cri.type}"/>'>
+                            <input type="hidden" name="keyword" value='<c:out value="${cri.keyword}"/>'>
 						</form>
 						<button type="submit" data-oper="modify" class="btn btn-info">수정</button>
                        	<button type="submit" data-oper="remove" class="btn btn-danger">삭제</button>
@@ -68,11 +70,15 @@
 				modFormObj.attr("action", "/board/list").attr("method", "GET");	// 목록화면 이동
 				var pageNumTag = $("input[name='pageNum']").clone();
 				var amountTag = $("input[name='amount']").clone();
+				var typeTag = $("input[name='type']").clone();
+				var keywordTag = $("input[name='keyword']").clone();
 								
 				// list로 돌아갈때 다지우고 필요한 애들(pageNum, amount)만 남김
 				modFormObj.empty();
 				modFormObj.append(pageNumTag);
 				modFormObj.append(amountTag);
+				modFormObj.append(typeTag);
+				modFormObj.append(keywordTag);
 			}
 			modFormObj.submit();
 		});
