@@ -56,7 +56,7 @@ public class SampleControllerTests {
 					.contentType(MediaType.APPLICATION_JSON)
 					.content(jsonStrTicket))
 					.andExpect(status().is(200));
-			// /sample/ticklet으로 JSON데이터를 전달, Gson : Java객체 -> JSON
+			// /sample/ticket으로 JSON데이터를 전달, Gson : Java객체 -> JSON
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

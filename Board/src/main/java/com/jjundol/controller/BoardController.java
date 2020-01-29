@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.jjundol.domain.BoardVO;
 import com.jjundol.domain.Criteria;
 import com.jjundol.domain.PageDTO;
-import com.jjundol.service.BoardService;
+import com.jjundol.service.BoardServiceImpl;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -31,7 +31,7 @@ public class BoardController {
 	//private BoardService service; 	//@AllArgsConstructor
 	
 	@Setter(onMethod_ = @Autowired)
-	private BoardService service;
+	private BoardServiceImpl service;
 	
 	// 전체 게시글 조회
 	@GetMapping("/list")

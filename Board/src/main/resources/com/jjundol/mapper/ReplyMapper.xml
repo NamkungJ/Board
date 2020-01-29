@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jjundol.mapper.ReplyMapper">
+
+	<insert id="register">
+		insert into tbl_reply (rno, bno, reply, replyer)
+		values (seq_reply.nextval, #{bno}, #{reply}, #{replyer})
+	</insert>
+	
+	<select id="select" resultType="com.jjundol.domain.ReplyVO">
+		select * from tbl_reply where rno = #{rno}
+	</select>
+	
+	<select id="getReplyListWithPaging" resultType="com.jjundol.domain.ReplyVO">
+		select rno, reply, replyer, replyDate, updateDate
+		from tbl_reply
+		where bno = #{bno}
+		order by rno asc
+	</select>
+	
+	<delete id="remove">
+		delete from tbl_reply where rno = #{rno}
+	</delete>
+	
+	<update id="update">
+		update tbl_reply 
+		set reply = #{reply},
+			updateDate = #{updateDate}
+		where rno = #{rno}
+	</update>		
+	
+</mapper>
