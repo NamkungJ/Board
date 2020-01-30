@@ -67,9 +67,7 @@
 	});
 </script>
 <script type="text/javascript">
-	$(document).ready(function() {		
-		
-		console.log("JS TEST....");
+	$(document).ready(function() {						
 		
 		var bnoValue = '<c:out value="${board.bno}"/>';
 		
