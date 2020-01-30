@@ -24,7 +24,6 @@ import com.jjundol.service.ReplyServiceImpl;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
-import oracle.jdbc.proxy.annotation.Post;
 
 @RestController
 @Log4j
@@ -38,10 +37,10 @@ public class ReplyController {
 	private ReplyServiceImpl service;
 	
 	@PostMapping(value = "/reg", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
-	public ResponseEntity<String> register(@RequestParam ReplyVO vo) {
+	public ResponseEntity<String> register(@RequestBody ReplyVO vo) {
 		log.info("[ReplyController]register.....");
 		
-		int resultCnt = service.register(vo);				
+		int resultCnt = service.register(vo);
 		
 		return resultCnt == 1 
 				? new ResponseEntity<String>("success", HttpStatus.OK)

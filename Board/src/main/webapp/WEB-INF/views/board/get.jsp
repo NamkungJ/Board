@@ -47,6 +47,7 @@
      	</div>
 	</div>
 <%@include file="../include/footer.jsp" %>
+<script type="text/javascript" src="/resources/js/reply.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		var operFormObj = $('#operForm');
@@ -61,6 +62,23 @@
 			operFormObj.find('#bno').remove();	//  bno값 넘길필요없음
 			operFormObj.attr("action", "/board/list").submit();
 			//self.location = '/board/list';
-		});
+		});				
+		
+	});
+</script>
+<script type="text/javascript">
+	$(document).ready(function() {		
+		
+		console.log("JS TEST....");
+		
+		var bnoValue = '<c:out value="${board.bno}"/>';
+		
+		replyService.add(
+			{ reply:"JS TEST", replyer:"TESTER", bno:bnoValue },
+			function(result){
+				alert("RESULT : " + result);
+			}
+		);
+		
 	});
 </script>
