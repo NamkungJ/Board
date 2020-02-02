@@ -45,6 +45,17 @@
 	             </div>
 	         </div>
      	</div>
+     	<div class="row">
+		    <div class="col-lg-12">
+		        <div class="panel panel-default">
+		        	<div class="panel-heading"><i class="fa fa-comments fa-fw"></i> 댓글</div>
+	                <div class="panel-body">
+	                	<ul class="chat">	                		
+	                	</ul>
+	                </div>
+		        </div>
+		    </div>
+		</div>
 	</div>
 <%@include file="../include/footer.jsp" %>
 <script type="text/javascript" src="/resources/js/reply.js"></script>
@@ -70,6 +81,29 @@
 	$(document).ready(function() {
 		
 		var bnoValue = '<c:out value="${board.bno}"/>';
+		var replyUL = $(".chat");
+		
+		showList(1);
+		
+		// 댓글 목록
+		function showList(page) {					
+			replyService.getList({ bno:bnoValue, page: page|| 1 },
+				function(list){
+					var str = "";
+					if(str == null || list.lenth == 0){
+						replyUL.html("");
+						return;
+					}					
+					for(var i = 0, len = list.length||0; i < len; i++) {
+						str += "<li class='left clearfix' data-rno='"+list[i].rno+"'>";
+						str += "<div><div class='header'><strong class='primary-font'>"+list[i].replyer+"</strong>";
+						str += "<small class='pull-right text-muted'>"+list[i].replyDate+"</small></div>";
+						str += "<p>"+list[i].reply+"</p></div></li>";
+					}
+					replyUL.html(str);
+				});
+			
+		}
 		
 		/*
 		// 댓글 등록
@@ -79,17 +113,7 @@
 				alert("RESULT : " + result);
 			}
 		);
-		
-		// 댓글 목록
-		replyService.getList(
-			{ bno:bnoValue, page:1 },
-			function(list){
-				for(var i = 0, len = list.length||0; i < len; i++) {
-					console.log(list[i]);
-				}
-			}
-		);
-		
+
 		// 댓글 삭제
 		replyService.remove(
 			35,
@@ -110,7 +134,6 @@
 				alert("UPDATE RESULT : " + result);
 			}
 		);
-		*/
 		
 		// 댓글 조회
 		replyService.get(
@@ -118,6 +141,7 @@
 				console.log("get : " + data);
 			}
 		);
+		*/
 		
 	});
 </script>

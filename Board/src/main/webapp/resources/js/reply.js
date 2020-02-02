@@ -1,10 +1,12 @@
-console.log("Reply JS Module.....");
+/*
+ * 게시글 댓글 처리
+ * */
 
 var replyService = (function(){
 	
 	// 댓글 등록
 	function add(reply, callback, error){
-		console.log("add reply ajax.....");
+		console.log("add reply ajax..... : " + reply);
 		
 		$.ajax({
 			type : 'post',
@@ -26,7 +28,7 @@ var replyService = (function(){
 	
 	// 댓글 목록
 	function getList(param, callback, error) {
-		console.log("getList reply get-ajax..... : " + param.bno + "/" + param.page);
+		console.log("getList reply getJSON..... : " + param.bno + "/" + param.page);
 		
 		var bno = param.bno;
 		var page = param.page || 1;
@@ -34,7 +36,7 @@ var replyService = (function(){
 		$.getJSON("/replies/pages/"+bno+"/"+page+".json",
 				function(data) {
 					if (callback) {
-						callback(data);
+						callback(data);	// json 수신
 					}
 				}).fail(function(xhr, status, err) {
 					if(error) {

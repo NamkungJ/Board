@@ -31,11 +31,12 @@ import lombok.extern.log4j.Log4j;
 //@AllArgsConstructor
 public class ReplyController {
 	
-	//private BoardService service; 	//@AllArgsConstructor
+	//private ReplyService service; 	//@AllArgsConstructor
 	
 	@Setter(onMethod_ = @Autowired)
 	private ReplyServiceImpl service;
 	
+	// 댓글 등록
 	@PostMapping(value = "/reg", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> register(@RequestBody ReplyVO vo) {
 		log.info("[ReplyController]register.....");
@@ -47,6 +48,7 @@ public class ReplyController {
 				: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+	// 댓글 목록
 	@GetMapping(value = "/pages/{bno}/{page}",
 			produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity<List<ReplyVO>> getList(@PathVariable("bno") int bno, @PathVariable("page") int page) {
@@ -57,6 +59,7 @@ public class ReplyController {
 		return new ResponseEntity<List<ReplyVO>>(service.getReplyList(cri, bno), HttpStatus.OK);
 	}
 	
+	// 댓글 조회
 	@GetMapping(value = "/{rno}", produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity<ReplyVO> get(@PathVariable("rno") int rno) {
 		
@@ -65,6 +68,7 @@ public class ReplyController {
 		return new ResponseEntity<ReplyVO>(service.select(rno), HttpStatus.OK);
 	}
 	
+	// 댓글 삭제
 	@DeleteMapping(value = "/{rno}", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> remove(@PathVariable("rno") int rno){
 		
@@ -77,6 +81,7 @@ public class ReplyController {
 				: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+	// 댓글 수정
 	@RequestMapping(value = "/{rno}", method = { RequestMethod.PUT, RequestMethod.PATCH },
 			consumes = { "application/json" },
 			produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
