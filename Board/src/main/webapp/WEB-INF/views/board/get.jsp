@@ -67,14 +67,55 @@
 	});
 </script>
 <script type="text/javascript">
-	$(document).ready(function() {						
+	$(document).ready(function() {
 		
 		var bnoValue = '<c:out value="${board.bno}"/>';
 		
+		/*
+		// 댓글 등록
 		replyService.add(
 			{ reply:"JS TEST", replyer:"TESTER", bno:bnoValue },
 			function(result){
 				alert("RESULT : " + result);
+			}
+		);
+		
+		// 댓글 목록
+		replyService.getList(
+			{ bno:bnoValue, page:1 },
+			function(list){
+				for(var i = 0, len = list.length||0; i < len; i++) {
+					console.log(list[i]);
+				}
+			}
+		);
+		
+		// 댓글 삭제
+		replyService.remove(
+			35,
+			function(result){
+				if(result === "success") {
+					alert("DELETE RESULT : " + rno);
+				}
+			},
+			function(err){
+				alert("DELETE ERROR");
+			}
+		);
+		
+		// 댓글 수정
+		replyService.update(
+			{ rno:21, bno:bnoValue, reply:"JS UPDATE!" },
+			function(result){
+				alert("UPDATE RESULT : " + result);
+			}
+		);
+		*/
+		
+		// 댓글 조회
+		replyService.get(
+			37, function(data) {
+				console.log("get : " + data);
 			}
 		);
 		
