@@ -105,11 +105,39 @@ var replyService = (function(){
 		
 	}
 	
+	
+	// 시간 처리 '시:분:초', '년/월/일'
+	function displayTime(timeValue) {
+		console.log(timeValue);
+		var today = new Date();
+		
+		var gap = today.getTime() - timeValue;
+		
+		var dataObj = new Date(timeValue);
+		var str = "";
+		
+		if( gap < (1000 * 60 * 60 * 24) ) {
+			var hh = dataObj.getHours();
+			var mi = dataObj.getMinutes();
+			var ss = dataObj.getSeconds();
+			
+			return [ (hh > 9 ? '' : '0') + hh, ':', (mi > 9 ? '' : '0' ) + mi, ':',  (ss > 9 ? '' : '0') + ss ].join('');			
+		}else {
+			var yy = dataObj.getFullYear();
+			var mm = dataObj.getMonth() + 1;
+			var dd = dataObj.getDate();
+			
+			return [ yy, '/', ( mm > 9 ? '' : '0' ) + mm, '/', ( dd > 9 ? '' : '0' ) + dd ].join('');
+		}
+	}
+	
+	
 	return {
 		add : add,
 		getList : getList,
 		remove : remove,
 		update : update,
-		get : get
+		get : get,
+		displayTime : displayTime
 	};	
 })();
