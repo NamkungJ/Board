@@ -83,16 +83,13 @@ public class ReplyController {
 	
 	// 댓글 수정
 	@RequestMapping(value = "/{rno}", method = { RequestMethod.PUT, RequestMethod.PATCH },
-			consumes = { "application/json" },
-			produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+			consumes = { "application/json" }, produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> update(@PathVariable("rno") int rno, @RequestBody ReplyVO vo){
-		
-		log.info("[ReplyController]remove..... : " + rno);
 		
 		vo.setBno(rno);
 		int resultCnt = service.update(vo);
 		
-		log.info("[ReplyController]remove..... : " + vo);
+		log.info("[ReplyController]update..... : " + vo);
 		
 		return resultCnt == 1 
 				? new ResponseEntity<String>("success", HttpStatus.OK)

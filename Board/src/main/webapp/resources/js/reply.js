@@ -67,16 +67,15 @@ var replyService = (function(){
 	
 	// 댓글 수정
 	function update(reply, callback, error){
-		console.log("update reply ajax..... : " + reply.bno + "/" + reply.rno);
+		console.log("update reply ajax..... : " + reply.rno);
 		
 		$.ajax({
 			type : 'put',
 			url : '/replies/' + reply.rno,
 			data : JSON.stringify(reply),
 			contentType : "application/json; charset=utf-8",
-			success : function(result, status, xhr) {
+			success : function(result, status, xhr){
 				if(callback){
-					console.log("UPDATE RESULT : " + result);
 					callback(result);
 				}
 			},
@@ -108,7 +107,6 @@ var replyService = (function(){
 	
 	// 시간 처리 '시:분:초', '년/월/일'
 	function displayTime(timeValue) {
-		console.log(timeValue);
 		var today = new Date();
 		
 		var gap = today.getTime() - timeValue;

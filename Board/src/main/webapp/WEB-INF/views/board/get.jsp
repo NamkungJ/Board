@@ -83,7 +83,7 @@
 	               <button id="modalModBtn" type="button" class="btn btn-warning" data-dismiss="modal">수정</button>
 	               <button id="modalRemoveBtn" type="button" class="btn btn-danger" data-dismiss="modal">삭제</button>
 	               <button id="modalRegisterBtn" type="button" class="btn btn-primary" data-dismiss="modal">등록</button>
-                   <button id="modalCloseBtn" type="button" class="btn btn-default" data-dismiss="modal">취소</button>                             
+                   <button id="modalCloseBtn" type="button" class="btn btn-default" data-dismiss="modal">닫기</button>                             
                 </div>
             </div>
         </div>
@@ -104,8 +104,7 @@
 			operFormObj.find('#bno').remove();	//  bno값 넘길필요없음
 			operFormObj.attr("action", "/board/list").submit();
 			//self.location = '/board/list';
-		});				
-		
+		});
 	});
 </script>
 <script type="text/javascript">
@@ -128,8 +127,8 @@
 					for(var i = 0, len = list.length||0; i < len; i++) {
 						str += "<li class='left clearfix' data-rno='"+list[i].rno+"'>";
 						str += "<div><div class='header'><strong class='primary-font'>"+list[i].replyer+"</strong>";
-						//str += "<small class='pull-right text-muted'>"+replyService.displayTime(list[i].replyDate)+"</small></div>";
-						str += "<small class='pull-right text-muted'>"+list[i].replyDate+"</small></div>";
+						str += "<small class='pull-right text-muted'>"+replyService.displayTime(list[i].replyDate)+"</small></div>";
+						//str += "<small class='pull-right text-muted'>"+list[i].replyDate+"</small></div>";
 						str += "<p>"+list[i].reply+"</p></div></li>";
 					}
 					replyUL.html(str);
@@ -169,40 +168,52 @@
 			replyService.add(reply, function(result){
 				modal.find("input").val("");
 				modal.modal("hide");
-				
 				showList(1); // 댓글 등록 후 목록 갱신
 			});
-		});	
+		});
 		
-		// 댓글 삭제
-		/*
-		replyService.remove(
-			35,
-			function(result){
-				if(result === "success") {
-					alert("DELETE RESULT : " + rno);
-				}
-			},
-			function(err){
-				alert("DELETE ERROR");
-			}
-		);
+		// 댓글 click Event
+		$(".chat").on("click", "li", function(e) {
+			
+			var rno = $(this).data("rno");
+			replyService.get(rno, function(result) {
+				modalInputReply.val(result.reply);
+				modalInputReplyer.val(result.replyer);
+				modalInputReplyDate.val(replyService.displayTime(result.replyDate)).attr("readonly", "readonly");
+				modal.data("rno", result.rno);	// 수정, 삭제를 위한 data-rno생성
+				
+				modal.find("button[id = 'modalRegisterBtn']").hide();
+				$(".modal").modal("show");
+			});
+		
+		});
 		
 		// 댓글 수정
-		replyService.update(
-			{ rno:21, bno:bnoValue, reply:"JS UPDATE!" },
-			function(result){
-				alert("UPDATE RESULT : " + result);
-			}
-		);
-		
-		// 댓글 조회
-		replyService.get(
-			37, function(data) {
-				console.log("get : " + data);
-			}
-		);
-		*/
-		
+		modelModBtn.on("click", function(e) {
+			
+			var reply = { rno : modal.data("rno"), reply : modalInputReply.val() }
+				
+			replyService.update( reply, function(result){
+					alert("댓글이 수정되었습니다.");
+					modal.modal("hide");					
+					showList(1);
+				}
+			);
+			
+		});
+		// 댓글 삭제
+		modelRemoveBtn.on("click", function(e) {
+			
+			var rno = modal.data("rno");
+			
+			replyService.remove(rno, function(result){
+					if(result === "success") {
+						alert("댓글이 삭제되었습니다.");
+						modal.modal("hide");
+						showList(1);
+					}
+				}
+			);
+		});
 	});
 </script>
