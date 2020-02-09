@@ -13,9 +13,18 @@
 	
 	<select id="getReplyListWithPaging" resultType="com.jjundol.domain.ReplyVO">
 		select rno, reply, replyer, replyDate, updateDate
-		from tbl_reply
-		where bno = #{bno}
-		order by rno asc
+		from (
+			select /* +INDEX(tbl_reply idx_reply) */ 
+				rownum rn, rno, reply, replyer, replyDate, updateDate
+			from tbl_reply
+			where bno = #{bno}
+			and rno > 0
+			and rownum <![CDATA[<=]]> #{cri.pageNum} * #{cri.amount}
+		) where rn <![CDATA[>]]> (#{cri.pageNum} - 1) * #{cri.amount}
+	</select>
+	
+	<select id="getCountReplyByBno" resultType="int">
+		select count(rno) from tbl_reply where bno = #{bno}
 	</select>
 	
 	<delete id="remove">

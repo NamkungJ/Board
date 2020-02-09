@@ -80,6 +80,7 @@
 		    <artifactId>log4jdbc-log4j2-jdbc4</artifactId>
 		    <version>1.16</version>
 		</dependency>
+		
 		<!-- https://mvnrepository.com/artifact/org.darkphoenixs/log4j -->
 		<dependency>
 		    <groupId>org.darkphoenixs</groupId>
@@ -106,14 +107,14 @@
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
 		    <artifactId>jackson-databind</artifactId>
-		    <version>2.9.6</version>
+		    <version>2.9.10.1</version>
 		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml -->
 		<dependency>
 		    <groupId>com.fasterxml.jackson.dataformat</groupId>
 		    <artifactId>jackson-dataformat-xml</artifactId>
-		    <version>2.9.6</version>
+		    <version>2.9.10</version>
 		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->

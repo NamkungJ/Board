@@ -36,7 +36,8 @@ var replyService = (function(){
 		$.getJSON("/replies/pages/"+bno+"/"+page+".json",
 				function(data) {
 					if (callback) {
-						callback(data);	// json 수신
+						//callback(data);	// json 수신
+						callback(data.replyCnt, data.list); // 댓글 개수와 옥록 (ReplypageDTO)
 					}
 				}).fail(function(xhr, status, err) {
 					if(error) {

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jjundol.domain.Criteria;
+import com.jjundol.domain.ReplyPageDTO;
 import com.jjundol.domain.ReplyVO;
 import com.jjundol.service.ReplyServiceImpl;
 
@@ -51,12 +52,12 @@ public class ReplyController {
 	// 댓글 목록
 	@GetMapping(value = "/pages/{bno}/{page}",
 			produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ResponseEntity<List<ReplyVO>> getList(@PathVariable("bno") int bno, @PathVariable("page") int page) {
+	public ResponseEntity<ReplyPageDTO> getList(@PathVariable("bno") int bno, @PathVariable("page") int page) {
 		log.info("[ReplyController]getList.....");
 		
-		Criteria cri = new Criteria(page, 10);	// page : 화면에서 클릭하는 번호
+		Criteria cri = new Criteria(page, 10);	// page : 화면에서 클릭하는 번호, 한 페이지에 10개 댓글
 		
-		return new ResponseEntity<List<ReplyVO>>(service.getReplyList(cri, bno), HttpStatus.OK);
+		return new ResponseEntity<ReplyPageDTO>(service.getReplyList(cri, bno), HttpStatus.OK);
 	}
 	
 	// 댓글 조회

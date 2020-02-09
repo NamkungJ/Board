@@ -54,6 +54,8 @@
 	                	<ul class="chat">	                		
 	                	</ul>
 	                </div>
+	                <div class="panel-footer reply-page-footer">	                	
+	                </div>
 		        </div>
 		    </div>
 		</div>
@@ -117,22 +119,89 @@
 		
 		// 댓글 목록
 		function showList(page) {
-			replyService.getList({ bno:bnoValue, page: page|| 1 },
-				function(list){
-					var str = "";
-					if(str == null || list.lenth == 0){
-						replyUL.html("");
-						return;
-					}					
-					for(var i = 0, len = list.length||0; i < len; i++) {
-						str += "<li class='left clearfix' data-rno='"+list[i].rno+"'>";
-						str += "<div><div class='header'><strong class='primary-font'>"+list[i].replyer+"</strong>";
-						str += "<small class='pull-right text-muted'>"+replyService.displayTime(list[i].replyDate)+"</small></div>";
-						//str += "<small class='pull-right text-muted'>"+list[i].replyDate+"</small></div>";
-						str += "<p>"+list[i].reply+"</p></div></li>";
-					}
-					replyUL.html(str);
-				});
+			
+			console.log("showList : " + page);
+			var param = { bno : bnoValue, page : page || 1 };
+			
+			replyService.getList(param, function(replyCnt, list){
+				
+				console.log("replyCnt : " + replyCnt);
+				console.log("replyCnt : " + list);
+				
+				if(page == -1) {	// 마지막 페이지 이동
+					pageNum = Math.ceil(replyCnt/10.0);
+					showList(pageNum);
+					return;
+				}
+				
+				var str = "";				
+				if(list == null || list.lenth == 0){					
+					return;
+				}
+				
+				for(var i = 0, len = list.length || 0; i < len; i++) {
+					str += "<li class='left clearfix' data-rno='"+list[i].rno+"'>";
+					str += "<div><div class='header'><strong class='primary-font'>"+list[i].replyer+"</strong>";
+					str += "<small class='pull-right text-muted'>"+replyService.displayTime(list[i].replyDate)+"</small></div>";					
+					str += "<p>"+list[i].reply+"</p></div></li>";
+				}
+				replyUL.html(str);
+				
+				showReplyPageFooter(replyCnt);
+			});					
+		
+		}
+				
+		
+		var pageNum = 1;
+		var replyPageFooter = $(".reply-page-footer");
+		
+		replyPageFooter.on("click", "li a", function(e) {
+			e.preventDefault();			
+			
+			var targetPageNum = $(this).attr("href");
+			console.log("Page Click / targetPageNum : " + targetPageNum);
+			
+			pageNum = targetPageNum;
+			showList(pageNum);
+			
+		});
+		
+		function showReplyPageFooter(replyCnt) {
+			var endNum = Math.ceil(pageNum / 10.0) * 10;
+			var startNum = endNum -9;
+			
+			var prev = startNum != 1
+			var next = false;
+			
+			if(endNum * 10 > replyCnt) {
+				endNum = Math.ceil(replyCnt/10.0);				
+			}
+			
+			if(endNum * 10 < replyCnt) {
+				next = true;
+			}
+			
+			var str = "<ul class='pagination pull-right'>";
+			
+			if(prev) {
+				str += "<li class='page-item'><a class='page-link' href='"+(startNum-1)+"'>Previous</a></li>";
+			}
+			
+			for(var i = startNum ; i <= endNum ; i++) {
+				var active = pageNum == i ? "active":"";				
+				str += "<li class='page-item "+active+" '><a class='page-link' href='"+i+"'>"+i+"</a></li>";
+			}
+			
+			if(next) {
+				str += "<li class='page-item'><a class='page-link' href='"+(endNum+1)+"'>Next</a></li>";
+			}
+			
+			str += "</ul></div>";
+			
+			console.log(str);
+			
+			replyPageFooter.html(str);
 			
 		}
 		
@@ -168,7 +237,8 @@
 			replyService.add(reply, function(result){
 				modal.find("input").val("");
 				modal.modal("hide");
-				showList(1); // 댓글 등록 후 목록 갱신
+				// showList(1); // 댓글 등록 후 목록 갱신
+				showList(-1); // 마지막 댓글 페이지로 이동
 			});
 		});
 		
@@ -196,11 +266,12 @@
 			replyService.update( reply, function(result){
 					alert("댓글이 수정되었습니다.");
 					modal.modal("hide");					
-					showList(1);
+					showList(pageNum);
 				}
 			);
 			
 		});
+		
 		// 댓글 삭제
 		modelRemoveBtn.on("click", function(e) {
 			
@@ -210,7 +281,7 @@
 					if(result === "success") {
 						alert("댓글이 삭제되었습니다.");
 						modal.modal("hide");
-						showList(1);
+						showList(pageNum);
 					}
 				}
 			);

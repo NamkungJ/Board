@@ -1,8 +1,7 @@
 package com.jjundol.service;
 
-import java.util.List;
-
 import com.jjundol.domain.Criteria;
+import com.jjundol.domain.ReplyPageDTO;
 import com.jjundol.domain.ReplyVO;
 
 public interface ReplyService {
@@ -20,6 +19,6 @@ public interface ReplyService {
 	public int update(ReplyVO reply);
 	
 	// 댓글 목록 조회, 페이징
-	public List<ReplyVO> getReplyList(Criteria cri, int bno);
-	
+	public ReplyPageDTO getReplyList(Criteria cri, int bno);
+
 }
