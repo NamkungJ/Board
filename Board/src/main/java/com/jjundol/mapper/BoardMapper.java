@@ -1,6 +1,9 @@
 package com.jjundol.mapper;
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 /*
  * 게시판 Mapper 인터페이스
  * */
@@ -32,4 +35,8 @@ public interface BoardMapper {
 	
 	// 특정 게시글 수정(업데이트)
 	public int update(BoardVO board);
+	
+	// 댓글 수 업데이트
+	public void updateReplyCnt(@Param("bno") int bno, @Param("amount") int amount);
+	
 }

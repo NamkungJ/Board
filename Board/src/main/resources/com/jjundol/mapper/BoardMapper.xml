@@ -28,10 +28,10 @@
 	
 	<select id="getListWithPaging" resultType="com.jjundol.domain.BoardVO">
 		select 
-			bno, title, content, writer, regdate, updatedate
+			bno, title, content, writer, regdate, replyCnt, updatedate
 		from (
 			select /*+ INDEX_DESC(tbl_board pk_board) */
-				rownum rn, bno, title, content, writer, regdate, updatedate
+				rownum rn, bno, title, content, writer, regdate, replyCnt, updatedate
 			from tbl_board
 			where
 			<include refid="criteria_search"></include>
@@ -78,6 +78,12 @@
 			writer = #{writer},
 			updatedate = sysdate
 		where bno = #{bno}
-	</update>		
+	</update>
+
+	<update id="updateReplyCnt">
+		update tbl_board
+		set replyCnt = replyCnt + #{amount}
+		where bno = #{bno}
+	</update>
 	
 </mapper>

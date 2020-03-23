@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jjundol.domain.Criteria;
 import com.jjundol.domain.ReplyPageDTO;
 import com.jjundol.domain.ReplyVO;
-import com.jjundol.service.ReplyServiceImpl;
+import com.jjundol.service.ReplyService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -30,7 +30,7 @@ public class ReplyController {
 	//private ReplyService service; 	//@AllArgsConstructor
 	
 	@Setter(onMethod_ = @Autowired)
-	private ReplyServiceImpl service;
+	private ReplyService service;
 	
 	// 댓글 등록
 	@PostMapping(value = "/reg", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })

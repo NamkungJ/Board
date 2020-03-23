@@ -29,7 +29,7 @@
 		                        		<tr class="odd gradeX">
 			                                <td><c:out value="${board.bno}"/></td>
 			                                <!-- <td><a href="/board/get?bno=<c:out value="${board.bno}"/>"><c:out value="${board.title}"/></a></td> -->
-			                                <td><a class="move" href="<c:out value='${board.bno}'/>"><c:out value="${board.title}"/></a></td>
+			                                <td><a class="move" href="<c:out value='${board.bno}'/>"><c:out value="${board.title}"/><span>[ <c:out value="${board.replyCnt}"></c:out> ]</span></a></td>
 			                                <td><c:out value="${board.writer}"/></td>
 			                                <td class="center"><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd"/></td>
 			                                <td class="center"><fmt:formatDate value="${board.updatedate}" pattern="yyyy-MM-dd"/></td>
